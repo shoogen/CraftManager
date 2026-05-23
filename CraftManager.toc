@@ -1,0 +1,6 @@
+## Title: CraftManager
+## Author: shoogen
+## Interface: 120005
+## SavedVariables: CM_WINDOW,CM_IGNORED
+
+CraftManager.lua
