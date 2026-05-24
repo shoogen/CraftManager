@@ -32,6 +32,12 @@ local RECIPES = {
             { 190328, 10 }
         }
     },
+    [190327] = {
+        links = "\124cff0070dd\124Hitem:190327::::::::90:::::\124h[Awakened Air]\124h\124r",
+        materials = {
+            { 190326, 10 }
+        }
+    },
 
 
 
@@ -203,6 +209,9 @@ local RECIPES = {
             { 192887, 20 }
         }
     },
+    [192869] = {
+        links = { "\124cffa335ee\124Hitem:192869::::::::90:::::\124h[Illimited Diamond]\124h\124r", "\124cffa335ee\124Hitem:192870::::::::90:::::\124h[Illimited Diamond]\124h\124r", "\124cffa335ee\124Hitem:192871::::::::90:::::\124h[Illimited Diamond]\124h\124r" }
+    },
 
 
 
@@ -259,61 +268,26 @@ local RECIPES = {
         }
     },
 
-
-
-    [205257] = {
-        links = "|cnIQ4:|Hitem:205257::::::::90:102:::::::::|h[Temporal Vestigial]|h|r"
-    },
-    [193919] = {
-        links = "|cnIQ3:|Hitem:193919::::::::90:102:::::::::|h[Frosty Soul]|h|r"
-    },
-    [192869] = {
-        links = "|cnIQ4:|Hitem:192869::::::::90:102:::::::::|h[Illimited Diamond |A:Professions-ChatIcon-Quality-Tier1:17:15::1|a]|h|r"
-    },
-    [205413] = {
-        links = "|cnIQ3:|Hitem:205413::::::::90:102:::::::::|h[Obsidian Cobraskin]|h|r"
-    },
-    [190320] = {
-        links = "|cnIQ3:|Hitem:190320::::::::90:102:::::::::|h[Rousing Fire]|h|r"
-    },
-    [204460] = {
-        links = "|cnIQ3:|Hitem:204460::::::::90:102:::::::::|h[Zaralek Glowspores]|h|r"
-    },
-    [190328] = {
-        links = "|cnIQ3:|Hitem:190328::::::::90:102:::::::::|h[Rousing Frost]|h|r"
-    },
-    [200113] = {
-        links = "|cnIQ4:|Hitem:200113::::::::90:102:::::::::|h[Resonant Crystal]|h|r"
-    },
-    [190315] = {
-        links = "|cnIQ3:|Hitem:190315::::::::90:102:::::::::|h[Rousing Earth]|h|r"
-    },
-    [208212] = {
-        links = "|cnIQ3:|Hitem:208212::::::::90:102:::::::::|h[Dreaming Essence]|h|r"
-    },
-    [193362] = {
-        links = "|cnIQ3:|Hitem:193362::::::::90:102:::::::::|h[Fiery Soul]|h|r"
-    },
-    [205258] = {
-        links = "|cnIQ5:|Hitem:205258::::::::90:102:::::::::|h[Everburning Shadowflame]|h|r"
-    },
-    [204464] = {
-        links = "|cnIQ3:|Hitem:204464::::::::90:102:::::::::|h[Shadowflame Essence]|h|r"
-    },
-    [205260] = {
-        links = "|cnIQ5:|Hitem:205260::::::::90:102:::::::::|h[Fleeting Glowspores]|h|r"
-    },
     [192887] = {
-        links = "|cnIQ3:|Hitem:192887::::::::90:102:::::::::|h[Elemental Harmony |A:Professions-ChatIcon-Quality-Tier1:17:15::1|a]|h|r"
+        links = { "|cnIQ3:|Hitem:192887::::::::90:102:::::::::|h[Elemental Harmony]|h|r", "|cnIQ3:|Hitem:193379::::::::90:102:::::::::|h[Elemental Harmony]|h|r", "|cnIQ3:|Hitem:193378::::::::90:102:::::::::|h[Elemental Harmony]|h|r" },
+        materials = {
+            { 191493, 0.5 },
+            { 192852, 0.5 },
+            { 192856, 0.5 },
+            { 192859, 0.5 },
+            { 192862, 0.5 },
+            { 192866, 0.5 }
+        }
     },
-    [204857] = {
-        links = "|cnIQ5:|Hitem:204857::::::::90:102:::::::::|h[Ancient Elementium Fragment]|h|r"
-    },
-    [190322] = {
-        links = "|cnIQ3:|Hitem:190322::::::::90:102:::::::::|h[Rousing Order]|h|r"
-    },
-    [190326] = {
-        links = "|cnIQ3:|Hitem:190326::::::::90:102:::::::::|h[Rousing Air]|h|r"
+    [191493] = {
+        links = { "\124cff1eff00\124Hitem:191493::::::::90:::::\124h[Primal Convergent]\124h\124r", "\124cff1eff00\124Hitem:191494::::::::90:::::\124h[Primal Convergent]\124h\124r", "\124cff1eff00\124Hitem:191495::::::::90:::::\124h[Primal Convergent]\124h\124r" },
+        materials = {
+            { 190316, 0.5 },
+            { 190321, 0.5 },
+            { 190327, 0.5 },
+            { 190329, 0.5 },
+            { 190324, 0.5 }
+        }
     },
     [204463] = {
         links = "|cnIQ3:|Hitem:204463::::::::90:102:::::::::|h[Dracothyst]|h|r",
@@ -321,12 +295,6 @@ local RECIPES = {
             { 204460, 300 },
             { 193368, 50 }
         }
-    },
-    [193920] = {
-        links = "|cnIQ3:|Hitem:193920::::::::90:102:::::::::|h[Earthen Soul]|h|r"
-    },
-    [193921] = {
-        links = "|cnIQ3:|Hitem:193921::::::::90:102:::::::::|h[Airy Soul]|h|r"
     },
 
     [193368] = {
@@ -336,6 +304,31 @@ local RECIPES = {
 }
 
 
+
+-- NOT USED YET fill in materials based on recipeID
+for id, recipe in pairs(RECIPES) do
+    if recipe.recipe then
+        recipe.materials = {}
+
+        local schematic = C_TradeSkillUI.GetRecipeSchematic(recipe.recipe, false)
+        for index, slot in ipairs(schematic.reagentSlotSchematics) do
+            if slot.required then
+                local item = slot.reagents[1]
+                table.insert(recipe.materials, { item.itemID, slot.quantityRequired / schematic.quantityMin })
+
+                if #slot.reagents > 1 then
+                    -- setup each quality level
+                    local qualities = {}
+                    RECIPES[item.itemID] = { qualities = qualities }
+
+                    for index, item in ipairs(slot.reagents) do
+                        table.insert(qualities, item.itemID)
+                    end
+                end
+            end
+        end
+    end
+end
 
 -- auto-generate missing materials
 for id, recipe in pairs(RECIPES) do
@@ -374,7 +367,7 @@ local function GenerateLinks()
         C_Timer.After(1, GenerateLinks)
     end
 end
---C_Timer.After(1, GenerateLinks)
+C_Timer.After(1, GenerateLinks)
 
 -- start code
 local f = nil
